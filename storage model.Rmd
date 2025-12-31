@@ -1,0 +1,187 @@
+---
+title: "Wassertank mit verzögertem Abfluss"
+author: ""
+date: ""
+output:
+  html_document:
+#    theme: yeti
+runtime: shiny
+---
+
+
+
+```{r libs, echo=FALSE, message=FALSE}
+library(deSolve)
+
+# https://www.youtube.com/watch?v=BtWQ4Kk1opg als Videotutorial
+```
+
+### Motivation
+
+Diese interaktive Shiny-App demonstriert das dynamische Verhalten eines einfachen **Wassertanks mit verzögert einsetzendem, nichtlinearem Abfluss**.\
+Sie eignet sich z.B. zur anschaulichen Erklärung von Speicherprozessen, Massenbilanzen und nichtlinearen Abflussgesetzen.
+
+------------------------------------------------------------------------
+
+### Modellannahmen
+
+Es wird ein einzelner Tank mit Volumen $V(t)$ betrachtet:
+
+-   konstanter Zufluss $Q_{in}$
+-   Abfluss erst ab einem Startzeitpunkt $t_{start}$
+-   nichtlinearer Abfluss
+
+$$
+\frac{dV}{dt} = Q_{in} - Q_{out}
+$$
+
+mit
+
+$$
+Q_{out} = \begin{cases}
+0 & t < t_{start} \\
+k \sqrt{V} & t \ge t_{start}
+\end{cases}
+$$
+
+------------------------------------------------------------------------
+
+### Modellimplementierung
+
+```{r model, echo=TRUE}
+tank_model <- function(t, state, parms) {
+  with(as.list(c(state, parms)), {
+
+    Qout <- if (t >= t_start) k * sqrt(max(V, 0)) else 0
+    dVdt <- Qin - Qout
+
+    list(c(dVdt), Qout = Qout)
+  })
+}
+```
+
+------------------------------------------------------------------------
+
+## Simulation
+
+```{r simulation, echo=FALSE, message=FALSE}
+tank_sim <- reactive({
+
+  parms <- c(Qin     = input$Qin,
+             k       = input$k,
+             t_start = input$t_start)
+
+  state <- c(V = input$V0)
+
+  times <- seq(0, 20, by = 0.1)
+
+  out <- ode(y = state,
+             times = times,
+             func = tank_model,
+             parms = parms)
+
+  as.data.frame(out)
+})
+```
+
+------------------------------------------------------------------------
+
+### Erläuterung
+
+Der folgende Plot zeigt den zeitlichen Verlauf des Tankvolumens und des Abflusses.
+
+-   Bis zum Zeitpunkt $t_{start}$ steigt das Volumen linear an, da kein Abfluss erfolgt.
+-   Danach setzt ein nichtlinearer Abfluss ein, der vom aktuellen Volumen abhängt.
+-   Langfristig stellt sich ein stationärer Zustand ein, wenn Zufluss und Abfluss gleich groß sind.
+
+------------------------------------------------------------------------
+
+### Parametersteuerung
+
+```{r inputs, echo=FALSE, message=FALSE}
+sliderInput("Qin",
+            "Zufluss Q_in [m³/h]",
+            min = 0, max = 5, value = 1, step = 0.25)
+
+sliderInput("k",
+            "Abflusskoeffizient k [1/h]",
+            min = 0.0, max = 5, value = 2, step = 0.05)
+
+sliderInput("t_start",
+            "Abfluss startet bei t [h]",
+            min = 0, max = 10, value = 3, step = 0.5)
+
+numericInput("V0",
+             "Startvolumen V₀ [m³]",
+             value = 1, min = 0)
+```
+
+------------------------------------------------------------------------
+
+```{r server, server=TRUE, echo=FALSE, message=FALSE}
+output$tankPlot <- renderPlot({
+  df <- tank_sim()
+
+  plot(df$time, df$V,
+       type = "l",
+       lwd = 2,
+       col = "blue",
+       xlab = "Zeit [h]",
+       ylab = "Volumen V [m³]",
+       main = "Wassertank mit nichtlinearem Abfluss")
+
+  par(new = TRUE)
+
+  plot(df$time, df$Qout,
+       type = "l",
+       lwd = 2,
+       col = "red",
+       axes = FALSE,
+       xlab = "",
+       ylab = "")
+
+  axis(side = 4, col = "red", col.axis = "red")
+  mtext("Abfluss Q_out [m³/h]", side = 4, line = 3, col = "red")
+
+  legend("topleft",
+         legend = c("Tankvolumen", "Abfluss"),
+         col = c("blue", "red"),
+         lwd = 2,
+         bty = "n")
+})
+
+
+```
+
+```{r ui, echo=FALSE, message=FALSE}
+plotOutput("tankPlot", height = "450px")
+```
+
+------------------------------------------------------------------------
+
+### Interpretation
+
+```{r text3, server=TRUE, echo=FALSE, message=FALSE}
+output$infoText <- renderUI({
+  tagList(
+    p(strong("Abflussbeginn bei:"), paste0(" t = ", input$t_start, " h.")),
+    p("Vor dem Abfluss steigt das Volumen linear an, da ein konstanter Zufluss vorliegt."),
+    p("Nach Beginn des Abflusses stellt sich aufgrund des nichtlinearen Abflussgesetzes ",
+      "schrittweise ein stationärer Zustand ein.")
+  )
+})
+```
+
+```{r ui_text, echo=FALSE, message=FALSE}
+uiOutput("infoText")
+```
+
+------------------------------------------------------------------------
+
+### Hinweise
+
+-   Vor $t_{start}$ entspricht das System einem reinen Speicher.
+-   Nach $t_{start}$ stellt sich ein stationärer Zustand ein, wenn $Q_{in} = Q_{out}$.
+-   Das Modell ist mathematisch einfach, zeigt aber typische Eigenschaften realer Abflusssysteme.
+
+------------------------------------------------------------------------
