@@ -68,7 +68,6 @@ The reactor was aerated to a sufficient oxygen concentration. Samples were taken
 
 The influent has a COD concentration of 540 g m^-3^.
 
-  
 ![Figure 1: Left: Experimental layout (from Ekama and Marais, 1977), Right: modified for use in mass balances](www/schemata_original_actual.png)
   
 &NewLine; 
