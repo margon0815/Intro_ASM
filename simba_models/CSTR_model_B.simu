@@ -1,0 +1,613 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Diagram Name="CSTR_model_B" Width="4000" Height="2000">
+   <scale useRoot="False" projection="WGS84" typ="No" />
+   <globals id="sisiDoc">
+      <version simba="4.3.15">
+         <block_versions />
+      </version>
+      <Style fgcol="#FF0000FF" flowBgCol="#FFFFFFFF" monBgCol="#FFFFFFFF" defFontSize="11" sigLabs="False" statusLab="True" autoScaleSankey="True" scaleSankeyGlobal="True" scaleSankyeFulltime="False" unitbased="True" showNonDefinedSankeyLines="True" maxw="50" CompositStyle="stacked" compAngle="45" prec="4" sankeyBlocks="False" sankeyBlockIcons="False" TS_ExcelFileName="parameterTS.xlsx" TS_ExcelTabName="Parameter" Pars_ExcelFileName="block_parameter.xlsx" Pars_ExcelTabName="Blocktype" cat1Name="LCAsimplecats1.cat" cat2Name="LCAsimplecats2.cat" LCA_ExcelFileName="LCA_Midpoint.xlsx" upropModel="upropASDM.def" scriptDefLineCol="#FF007500" scriptMarkedLineCol="#FF006400" showOutOfCapa="True" outOfCapaCol="#FF8B0000" maxDataInPlot="10000" reportProjects="False" projectTitle="" projectDescription="" projectAutor="" greyBlockAnimation="False">
+         <simOpts trep="-6000000000" hmax="10" hminforce="0" ode="ODE15S" jtype="Dense" alg_type="IteratorDamped" maxiter="1000" reltol="1E-08" abstol="1E-08" maxhmin="10" scaling="False" hmin_fallback_fak="100" fallbackForSlow="True" isPar="False" isParDX="False" isParPrepAndXd2="False" isParJacobian="False" calcAndSaveAddRes="True" saveStates="True" useZeroCrossing="False" tupdate="300" checkForNaNs="True" realTime="False" realTimeScale="1440" scadaConnect="False" scadaUpdateCycle="30" displayDebugInfos="false" />
+         <sankeyItems>
+            <sankeyItem type="Q" id="m^3/d" scal="10000" />
+            <sankeyItem type="Property" id="TSS" scal="1E-05" />
+            <sankeyItem type="Property" id="VSS" scal="1E-05" />
+            <sankeyItem type="Property" id="ISS" scal="1E-05" />
+            <sankeyItem type="Property" id="N" scal="1E-05" />
+            <sankeyItem type="Property" id="TKN" scal="1E-05" />
+            <sankeyItem type="Property" id="N_fil" scal="1E-05" />
+            <sankeyItem type="Property" id="N_sol" scal="1E-05" />
+            <sankeyItem type="Property" id="NOx" scal="1E-05" />
+            <sankeyItem type="Property" id="P" scal="1E-05" />
+            <sankeyItem type="Property" id="COD" scal="5400" />
+            <sankeyItem type="Property" id="COD_fil" scal="5400" />
+            <sankeyItem type="Property" id="COD_sol" scal="5400" />
+            <sankeyItem type="Property" id="BOD5" scal="1E-05" />
+            <sankeyItem type="Property" id="BOD5_fil" scal="1E-05" />
+            <sankeyItem type="Property" id="BOD5_sol" scal="1E-05" />
+            <sankeyItem type="Fraction" id="SO" scal="4300" />
+            <sankeyItem type="Fraction" id="SS" scal="4300" />
+            <sankeyItem type="Fraction" id="XH" scal="4300" />
+            <sankeyItem type="Fraction" id="XS" scal="4300" />
+         </sankeyItems>
+         <lineStyles>
+            <lineStyle col="#C80000FF" w="2" lstyle="Solid" mstyle="none" msize="5" mcol="#FFFF0000" />
+            <lineStyle col="#C8FF0000" w="2" lstyle="Solid" mstyle="none" msize="5" mcol="#FFFF0000" />
+            <lineStyle col="#C800FF00" w="2" lstyle="Solid" mstyle="none" msize="5" mcol="#FFFF0000" />
+            <lineStyle col="#C80000FF" w="1" lstyle="Solid" mstyle="none" msize="5" mcol="#FFFF0000" />
+            <lineStyle col="#FFFF0000" w="1" lstyle="Solid" mstyle="none" msize="5" mcol="#FFFF0000" />
+            <lineStyle col="#FF00FF00" w="1" lstyle="Solid" mstyle="none" msize="5" mcol="#FFFF0000" />
+         </lineStyles>
+         <UnitList>
+            <UnitDefs>
+               <UnitDef refid="m^3/d" id="m^3/s" utype="linear" a="0" b="86400" />
+               <UnitDef refid="m^3/d" id="m^3/h" utype="linear" a="0" b="24" />
+               <UnitDef refid="m^3/d" id="l/s" utype="linear" a="0" b="86.4" />
+               <UnitDef refid="°C" id="°F" utype="linear" a="-17.777777777777779" b="0.55555555555555558" />
+               <UnitDef refid="°C" id="K" utype="linear" a="-273.15" b="1" />
+               <UnitDef refid="d" id="h" utype="linear" a="0" b="0.041666666666666664" />
+               <UnitDef refid="d" id="min" utype="linear" a="0" b="0.00069444444444444447" />
+               <UnitDef refid="kg" id="t" utype="linear" a="0" b="1000" />
+               <UnitDef refid="m^3/d" id="cfm" utype="linear" a="0" b="40.776259092480004" />
+               <UnitDef refid="m^3/d" id="Mgal/d" utype="linear" a="0" b="3785.411784" />
+               <UnitDef refid="m^3/d" id="gal/min" utype="linear" a="0" b="5.45099296896" />
+               <UnitDef refid="m^3" id="gal" utype="linear" a="0" b="0.0037854117839999997" />
+               <UnitDef refid="m^3" id="Mgal" utype="linear" a="0" b="3785.411784" />
+               <UnitDef refid="m^3/h" id="cfm" utype="linear" a="0" b="1.6990107955200002" />
+               <UnitDef refid="m^3/h" id="Mgal/d" utype="linear" a="0" b="157.725491" />
+               <UnitDef refid="m^3/h" id="gal/min" utype="linear" a="0" b="0.22712470703999998" />
+               <UnitDef refid="m^3/h" id="m^3/d" utype="linear" a="0" b="0.041666666666666664" />
+               <UnitDef refid="m^3/h" id="l/s" utype="linear" a="0" b="3.6" />
+               <UnitDef refid="m^3/h/m" id="cfm/ft" utype="linear" a="0" b="5.5741824000000006" />
+               <UnitDef refid="Nm^3/d" id="Nm^3/h" utype="linear" a="0" b="24" />
+               <UnitDef refid="Nm^3/d" id="scfm" utype="linear" a="0" b="37.99452352142405" />
+               <UnitDef refid="Nm^3/h" id="Nm^3/d" utype="linear" a="0" b="0.041666666666666664" />
+               <UnitDef refid="Nm^3/h" id="scfm" utype="linear" a="0" b="1.5831051467260022" />
+               <UnitDef refid="Nm^3/h/m" id="scfm/ft" utype="linear" a="0" b="5.5741824000000006" />
+               <UnitDef refid="mbar" id="psi" utype="linear" a="0" b="68.9475729" />
+               <UnitDef refid="mbar" id="Pa" utype="linear" a="0" b="0.01" />
+               <UnitDef refid="mbar" id="bar" utype="linear" a="0" b="1000" />
+               <UnitDef refid="mbar" id="inH2O" utype="linear" a="0" b="2.4884" />
+               <UnitDef refid="mbar" id="mH2O" utype="linear" a="0" b="98.0665" />
+               <UnitDef refid="m" id="ft" utype="linear" a="0" b="0.3048" />
+               <UnitDef refid="m^2" id="ft^2" utype="linear" a="0" b="0.09290304" />
+               <UnitDef refid="m^2" id="ha" utype="linear" a="0" b="0.0001" />
+               <UnitDef refid="m/s" id="ft/min" utype="linear" a="0" b="0.00508" />
+               <UnitDef refid="g/m^3/m" id="%/ft" utype="linear" a="0" b="9.8123527187385857" />
+               <UnitDef refid="g/m^3/m" id="%/m" utype="linear" a="0" b="2.9908059092810095" />
+               <UnitDef refid="kg" id="lb" utype="linear" a="0" b="0.45359237" />
+               <UnitDef refid="kg" id="ston" utype="linear" a="0" b="0.00022679618500000002" />
+               <UnitDef refid="d" id="s" utype="linear" a="0" b="1.1574074074074073E-05" />
+               <UnitDef refid="g/m^3" id="mg/l" utype="linear" a="0" b="1" />
+               <UnitDef refid="g/m^3" id="g/l" utype="linear" a="0" b="1000" />
+               <UnitDef refid="g/m^3" id="kg/m^3" utype="linear" a="0" b="1000" />
+               <UnitDef refid="g/m^3" id="lb/ft^3" utype="linear" a="0" b="16018.46337396014" />
+               <UnitDef refid="g/m^3" id="lb/gal" utype="linear" a="0" b="119826.42731689663" />
+               <UnitDef refid="kW" id="W" utype="linear" a="0" b="0.001" />
+               <UnitDef refid="kW" id="kWh/d" utype="linear" a="0" b="0.041666666666666664" />
+               <UnitDef refid="kW" id="kWh/a" utype="linear" a="0" b="0.00011415525114155251" />
+               <UnitDef refid="kW" id="MWh/a" utype="linear" a="0" b="0.11415525114155251" />
+               <UnitDef refid="kW" id="MJ/d" utype="linear" a="0" b="0.011574074074074073" />
+               <UnitDef refid="m^3/d" id="l/min" utype="linear" a="0" b="1.44" />
+               <UnitDef refid="m^3/d" id="l/h" utype="linear" a="0" b="0.024" />
+               <UnitDef refid="m^3" id="l" utype="linear" a="0" b="0.001" />
+               <UnitDef refid="m^3" id="ft^3" utype="linear" a="0" b="0.028316846592000004" />
+               <UnitDef refid="m" id="in" utype="linear" a="0" b="0.0254" />
+               <UnitDef refid="m" id="mm" utype="linear" a="0" b="0.001" />
+               <UnitDef refid="m" id="cm" utype="linear" a="0" b="0.01" />
+               <UnitDef refid="m" id="dm" utype="linear" a="0" b="0.1" />
+               <UnitDef refid="m^2" id="mm^2" utype="linear" a="0" b="1E-06" />
+               <UnitDef refid="m^2" id="cm^2" utype="linear" a="0" b="0.0001" />
+               <UnitDef refid="m^2" id="in^2" utype="linear" a="0" b="0.00064516" />
+               <UnitDef refid="m^2/m^3" id="ft^2/ft^3" utype="linear" a="0" b="3.280839895013123" />
+               <UnitDef refid="m/s" id="ft/s" utype="linear" a="0" b="0.3048" />
+               <UnitDef refid="m/s" id="ft/h" utype="linear" a="0" b="8.4666666666666674E-05" />
+               <UnitDef refid="m/s" id="ft/d" utype="linear" a="0" b="3.5277777777777779E-06" />
+               <UnitDef refid="m/s" id="in/s" utype="linear" a="0" b="0.0254" />
+               <UnitDef refid="m/s" id="m/min" utype="linear" a="0" b="0.016666666666666666" />
+               <UnitDef refid="m/s" id="m/h" utype="linear" a="0" b="0.00027777777777777778" />
+               <UnitDef refid="m/s" id="m/d" utype="linear" a="0" b="1.1574074074074073E-05" />
+               <UnitDef refid="mm/d" id="mm/min" utype="linear" a="0" b="1440" />
+               <UnitDef refid="mm/d" id="mm/5min" utype="linear" a="0" b="288" />
+               <UnitDef refid="mm/d" id="mm/10min" utype="linear" a="0" b="144" />
+               <UnitDef refid="mm/d" id="mm/h" utype="linear" a="0" b="24" />
+               <UnitDef refid="mm/d" id="l/(s*ha)" utype="linear" a="0" b="8.64" />
+               <UnitDef refid="mm/d" id="in/h" utype="linear" a="0" b="609.59999999999991" />
+               <UnitDef refid="g/(m^2*d)" id="g/(m^2*h)" utype="linear" a="0" b="24" />
+               <UnitDef refid="g/(m^2*d)" id="kg/(m^2*h)" utype="linear" a="0" b="24000" />
+               <UnitDef refid="g/(m^2*d)" id="kg/(m^2*d)" utype="linear" a="0" b="1000" />
+               <UnitDef refid="g/(m^2*d)" id="lb/(ft^2*d)" utype="linear" a="0" b="4882.4276363830513" />
+               <UnitDef refid="g/(m^2*d)" id="lb/(ft^2*h)" utype="linear" a="0" b="117178.26327319322" />
+               <UnitDef refid="kg" id="g" utype="linear" a="0" b="0.001" />
+               <UnitDef refid="g/m^3" id="kg/l" utype="linear" a="0" b="1000000" />
+               <UnitDef refid="g/m^3" id="lb/Mgal" utype="linear" a="0" b="0.11982642731689663" />
+               <UnitDef refid="g N/m^3" id="mg N/l" utype="linear" a="0" b="1" />
+               <UnitDef refid="g N/m^3" id="g NO3/m^3" utype="linear" a="0" b="0.22590103493823754" />
+               <UnitDef refid="g P/m^3" id="mg P/l" utype="linear" a="0" b="1" />
+               <UnitDef refid="g S/m^3" id="mg S/l" utype="linear" a="0" b="1" />
+               <UnitDef refid="g/d" id="kg/d" utype="linear" a="0" b="1000" />
+               <UnitDef refid="g/d" id="mg/d" utype="linear" a="0" b="0.001" />
+               <UnitDef refid="g/d" id="t/d" utype="linear" a="0" b="1000000" />
+               <UnitDef refid="g/d" id="lb/d" utype="linear" a="0" b="453.59237" />
+               <UnitDef refid="g/d" id="ston/d" utype="linear" a="0" b="907184.74" />
+               <UnitDef refid="Nm^3/t VS" id="Nm^3/kg VS" utype="linear" a="0" b="1000" />
+               <UnitDef refid="Nm^3/t VS" id="ft^3/lb VS" utype="linear" a="0" b="62.427960576144613" />
+               <UnitDef refid="Nm^3 CH4/t VS" id="Nm^3 CH4/kg VS" utype="linear" a="0" b="1000" />
+               <UnitDef refid="Nm^3 CH4/t VS" id="ft^3 CH4/kg VS" utype="linear" a="0" b="62.427960576144613" />
+               <UnitDef refid="kW" id="PS" utype="linear" a="0" b="0.73549875" />
+               <UnitDef refid="kW" id="hp" utype="linear" a="0" b="0.74569987158227025" />
+               <UnitDef refid="kW" id="Btu/s" utype="linear" a="0" b="1.05505585262" />
+               <UnitDef refid="kW" id="Btu/h" utype="linear" a="0" b="0.0002930710701722222" />
+               <UnitDef refid="kJ" id="J" utype="linear" a="0" b="0.001" />
+               <UnitDef refid="kJ" id="MJ" utype="linear" a="0" b="1000" />
+               <UnitDef refid="kJ" id="Btu" utype="linear" a="0" b="1.05505585262" />
+               <UnitDef refid="kJ" id="Wh" utype="linear" a="0" b="3.6" />
+               <UnitDef refid="kJ" id="Ws" utype="linear" a="0" b="0.001" />
+               <UnitDef refid="kJ" id="cal" utype="linear" a="0" b="0.0041868" />
+               <UnitDef refid="kJ" id="kcal" utype="linear" a="0" b="4.1868" />
+            </UnitDefs>
+            <defaultUnits>
+               <defaultUnit refid="m^3/d" id="m^3/d" />
+               <defaultUnit refid="°C" id="°C" />
+               <defaultUnit refid="d" id="d" />
+               <defaultUnit refid="kg" id="kg" />
+               <defaultUnit refid="m^3" id="m^3" />
+               <defaultUnit refid="m^3/h" id="m^3/h" />
+               <defaultUnit refid="m^3/h/m" id="m^3/h/m" />
+               <defaultUnit refid="Nm^3/d" id="Nm^3/d" />
+               <defaultUnit refid="Nm^3/h" id="Nm^3/h" />
+               <defaultUnit refid="Nm^3/h/m" id="Nm^3/h/m" />
+               <defaultUnit refid="mbar" id="mbar" />
+               <defaultUnit refid="m" id="m" />
+               <defaultUnit refid="m^2" id="m^2" />
+               <defaultUnit refid="m/s" id="m/s" />
+               <defaultUnit refid="g/m^3/m" id="g/m^3/m" />
+               <defaultUnit refid="g/m^3" id="g/m^3" />
+               <defaultUnit refid="kW" id="kW" />
+               <defaultUnit refid="m^2/m^3" id="m^2/m^3" />
+               <defaultUnit refid="mm/d" id="mm/d" />
+               <defaultUnit refid="g/(m^2*d)" id="g/(m^2*d)" />
+               <defaultUnit refid="g N/m^3" id="g N/m^3" />
+               <defaultUnit refid="g P/m^3" id="g P/m^3" />
+               <defaultUnit refid="g S/m^3" id="g S/m^3" />
+               <defaultUnit refid="g/d" id="g/d" />
+               <defaultUnit refid="Nm^3/t VS" id="Nm^3/t VS" />
+               <defaultUnit refid="Nm^3 CH4/t VS" id="Nm^3 CH4/t VS" />
+               <defaultUnit refid="kJ" id="kJ" />
+            </defaultUnits>
+            <defaultUnitsPars>
+               <defaultUnit refid="m^3/d" id="m^3/d" />
+               <defaultUnit refid="°C" id="°C" />
+               <defaultUnit refid="d" id="d" />
+               <defaultUnit refid="kg" id="kg" />
+               <defaultUnit refid="m^3" id="m^3" />
+               <defaultUnit refid="m^3/h" id="m^3/h" />
+               <defaultUnit refid="m^3/h/m" id="m^3/h/m" />
+               <defaultUnit refid="Nm^3/d" id="Nm^3/d" />
+               <defaultUnit refid="Nm^3/h" id="Nm^3/h" />
+               <defaultUnit refid="Nm^3/h/m" id="Nm^3/h/m" />
+               <defaultUnit refid="mbar" id="mbar" />
+               <defaultUnit refid="m" id="m" />
+               <defaultUnit refid="m^2" id="m^2" />
+               <defaultUnit refid="m/s" id="m/s" />
+               <defaultUnit refid="g/m^3/m" id="g/m^3/m" />
+               <defaultUnit refid="g/m^3" id="g/m^3" />
+               <defaultUnit refid="kW" id="kW" />
+               <defaultUnit refid="m^2/m^3" id="m^2/m^3" />
+               <defaultUnit refid="mm/d" id="mm/d" />
+               <defaultUnit refid="g/(m^2*d)" id="g/(m^2*d)" />
+               <defaultUnit refid="g N/m^3" id="g N/m^3" />
+               <defaultUnit refid="g P/m^3" id="g P/m^3" />
+               <defaultUnit refid="g S/m^3" id="g S/m^3" />
+               <defaultUnit refid="g/d" id="g/d" />
+               <defaultUnit refid="Nm^3/t VS" id="Nm^3/t VS" />
+               <defaultUnit refid="Nm^3 CH4/t VS" id="Nm^3 CH4/t VS" />
+               <defaultUnit refid="kJ" id="kJ" />
+            </defaultUnitsPars>
+         </UnitList>
+      </Style>
+      <gloParDefs />
+      <plots>
+         <plotTab TabLabel="OUR" TabType="plot" XLabel="t [d]" YLabel="" fosize="11" fixXaxis="False" xminFix="0" xmaxFix="1" fixYaxis="False" yminFix="0" ymaxFix="1" fixYaxisR="False" yminFixR="0" ymaxFixR="1" XisT="False">
+            <plotItems>
+               <plotDataSet sourceType="Current" source="Current" blockidx="AS" outputType="DiscreteState" yidx="OUR" quality="0" label="AS/DiscreteState: OUR kg/d">
+                  <xydata legend="AS/DiscreteState: OUR kg/d" YrefUnitId="kg/d" col="#C80000FF" w="2" lstyle="Solid" mstyle="none" msize="5" mcol="#FFFF0000" onLeft="True" />
+               </plotDataSet>
+               <plotDataSet sourceType="File" source="measured_OUR.xlsx" blockidx="Tabelle3" outputType="Output" yidx="" quality="1" label="measured_OUR.xlsx/Tabelle3/OUR -">
+                  <xydata legend="measured_OUR.xlsx/Tabelle3/OUR -" YUnit="" col="#C8FF0000" w="0" lstyle="Solid" mstyle="dot" msize="5" mcol="#FFFF0000" onLeft="True" />
+               </plotDataSet>
+            </plotItems>
+         </plotTab>
+      </plots>
+   </globals>
+   <blocks>
+      <block name="influent conc." blockType="sisiBlock" x="155" y="160" w="50" h="70" bgCol="#F2EFEFEF" help="SIMBA#_Global_Block_Temperature_Zero.pdf" page="32">
+         <extra blockID="basmLib.asm_constBlock" HlpIdx="">
+            <Module id="influent conc." subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="SO" val="0" />
+                  <par id="SS" val="110" />
+                  <par id="XS" val="430" />
+                  <par id="XH" val="0" />
+                  <par id="Q" val="10000" />
+                  <par id="displayUnits" val="false" />
+               </parameters>
+               <Pos x="180" y="195" z="0" />
+            </Module>
+         </extra>
+         <defShape typ="Rectangle" fcol="#FF606060" bgcol="#26606060" shadow="True" />
+         <icon rotate="False" flip="True" />
+      </block>
+      <block name="effluent" blockType="sisiBlock" x="930" y="245" w="20" h="10" help="SIMBA#_Global_Block_Sink.pdf" page="30">
+         <extra blockID="basmLib.asm_sinkBlock" HlpIdx="">
+            <Anno>DQo=</Anno>
+            <Module id="effluent" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_sinkBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="size" val="5" />
+                  <par id="sinktype" val="Effluent" />
+                  <par id="display" val="false" />
+                  <par id="feedThrough" val="false" />
+                  <par id="plotStyle" val="Classic" />
+               </parameters>
+               <Pos x="940" y="250" z="0" />
+               <Input id="u" vis="True" Link="SC" LinkIdx="0" />
+            </Module>
+         </extra>
+         <defShape typ="Arrow" lWidth="1.5" fcol="#FF0049C3" bgcol="#180049C3" var1="0.2" shadow="True" />
+         <icon rotate="True" flip="False" />
+      </block>
+      <block name="set model parameter" blockType="sisiBlock" x="335" y="35" w="115" h="25" help="SIMBA#_Global_Block_setmodelparameter.pdf" page="10">
+         <extra blockID="basmLib.asm_setASMpars" HlpIdx="">
+            <Module id="set model parameter" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_setASMpars">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="____dymmy_par" val="0.0" />
+                  <par id="mu_max" val="4" />
+                  <par id="YH" val="0.67" />
+                  <par id="bH" val="0.6" />
+                  <par id="K_S" val="5" />
+                  <par id="kh" val="2" />
+                  <par id="Kx" val="0.04" />
+               </parameters>
+               <Pos x="392" y="47" z="0" />
+            </Module>
+         </extra>
+         <defShape typ="Rectangle" lWidth="3" fcol="#FF258A00" bgcol="#72258A00" shadow="True" />
+         <icon rotate="False" flip="True" />
+      </block>
+      <block name="Annotation" blockType="aBlockAnnotation" x="30" y="35" w="285" h="85" drawName="False" help="simba#_wwtp_block_annotation.pdf">
+         <extra anno="&lt;b&gt;Description&lt;/b&gt;&#xD;&#xA;&lt;br/&gt; &#xD;&#xA;&lt;br/&gt; &#xD;&#xA;simple CSTR without biomass recirculation and growth kinetics from model B (Gujer and Henze 1991)&#xD;&#xA;&lt;br/&gt; &#xD;&#xA;M. Ahnert, TU Dresden&#xD;&#xA;&lt;br/&gt; &#xD;&#xA;markus.ahnert@tu-dresden.de&#xD;&#xA;" parseType="XML_style" imScale="1" mleft="8" />
+         <defShape typ="Rectangle" fcol="#76000000" bgcol="#12000000" shadow="True" />
+         <icon rotate="True" flip="False" />
+      </block>
+      <block name="Pump" blockType="sisiBlock" x="280" y="190" w="20" h="35" drawFrame="False" drawName="False" flipName="True" help="SIMBA#_Global_Block_Pump.pdf" page="29">
+         <extra blockID="basmLib.asm_pumpBlock" HlpIdx="">
+            <Anno>DQo=</Anno>
+            <Module id="Pump" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_pumpBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+               </parameters>
+               <Pos x="290" y="207" z="0" />
+               <Input id="yin" vis="True" Link="influent conc." LinkIdx="0" />
+               <Input id="qpu" vis="True" Link="Q" LinkIdx="0" />
+            </Module>
+         </extra>
+         <icon rotate="True" flip="True" name="wwtp_pump2.svg" x="0" y="0" w="1" h="1" scale="True" />
+      </block>
+      <block name="effluent1" blockType="sisiBlock" x="355" y="190" w="20" h="10" drawName="False" help="SIMBA#_Global_Block_Sink.pdf" page="30">
+         <extra blockID="basmLib.asm_sinkBlock" HlpIdx="">
+            <Anno>DQo=</Anno>
+            <Module id="effluent1" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_sinkBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="size" val="5" />
+                  <par id="sinktype" val="Effluent" />
+                  <par id="display" val="false" />
+                  <par id="feedThrough" val="false" />
+                  <par id="plotStyle" val="Classic" />
+               </parameters>
+               <Pos x="365" y="195" z="0" />
+               <Input id="u" vis="True" Link="Pump" LinkIdx="0" />
+            </Module>
+         </extra>
+         <defShape typ="Arrow" lWidth="1.5" fcol="#FF0049C3" bgcol="#180049C3" var1="0.2" shadow="True" />
+         <icon rotate="True" flip="False" />
+      </block>
+      <block name="Pulse" blockType="sisiBlock" x="125" y="300" w="30" h="30" drawName="False" help="simba#_manual_referenz.xps" page="42">
+         <extra blockID="signalLib.pulse" HlpIdx="">
+            <Module id="Pulse" subtype="" Assambly="signalLib.dll" Class="signalLib.pulse">
+               <parameters>
+                  <par id="A" val="1.0" />
+                  <par id="T" val="864000000000" />
+                  <par id="Toff" val="72000000000" />
+                  <par id="fon" val="50" />
+                  <par id="inunit" val="-" />
+               </parameters>
+               <Pos x="140" y="315" z="0" />
+            </Module>
+         </extra>
+         <defShape typ="Rectangle" fcol="#FF606060" bgcol="#26606060" shadow="True" />
+         <icon rotate="False" flip="False" name="sig_pulse_s.svg" x="0" y="0" w="1" h="1" scale="False" />
+      </block>
+      <block name="Q" blockType="sisiBlock" x="180" y="300" w="35" h="30" help="simba#_manual_referenz.xps" page="47">
+         <extra blockID="signalLib.Gain" HlpIdx="">
+            <Module id="Q" subtype="" Assambly="signalLib.dll" Class="signalLib.Gain">
+               <parameters>
+                  <par id="n" val="1" />
+                  <par id="K" val="2*18" />
+                  <par id="inunit" val="-" />
+                  <par id="outunit" val="-" />
+               </parameters>
+               <Pos x="197" y="315" z="0" />
+               <Input id="u" vis="True" Link="Pulse" LinkIdx="0" />
+            </Module>
+         </extra>
+         <defShape typ="Arrow" fcol="#FF606060" bgcol="#26606060" var1="0.2" shadow="True" />
+         <icon rotate="True" flip="False" />
+      </block>
+      <block name="AS" blockType="sisiBlock" x="470" y="245" w="50" h="40" drawFrame="False" help="simba#_wwtp_cstr_deni.pdf">
+         <extra blockID="basmLib.asm_cstrBlock" HlpIdx="">
+            <Module id="AS" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_cstrBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="Vol" val="6.73" />
+                  <par id="h" val="1" />
+                  <par id="isvar" val="true" />
+                  <par id="showvol" val="true" />
+                  <par id="advancedInfo" val="true" />
+                  <par id="advancedInfoRates" val="true" />
+                  <par id="calculateOUR" val="true" />
+                  <par id="allowIO2input" val="false" />
+                  <par id="animateAeration" val="true" />
+                  <par id="zeroCrossing" val="false" />
+                  <par id="Khyd" val="2000" />
+               </parameters>
+               <Pos x="495" y="265" z="0" />
+               <Input id="u" vis="True" Link="Mix" LinkIdx="0" />
+            </Module>
+         </extra>
+         <icon rotate="False" flip="False" name="wwtp_asm3_deni.svg" x="0" y="0" w="1" h="1" scale="True" />
+      </block>
+      <block name="T_water" blockType="sisiBlock" x="480" y="35" w="45" h="20" bgCol="#40324D90" help="SIMBA#_Global_Block_Temperature_Zero.pdf" page="32">
+         <extra blockID="basmLib.asm_constBlock" HlpIdx="">
+            <Module id="T_water" subtype="Signal,1" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+               <parameters>
+                  <par id="Model" val="Signal" />
+                  <par id="Dimmension" val="1" />
+                  <par id="Constant_0" val="20" />
+                  <par id="unit_0" val="-" />
+                  <par id="sel_0" val="User defined" />
+                  <par id="displayUnits" val="false" />
+               </parameters>
+               <Pos x="502" y="45" z="0" />
+               <Output id="y" vis="False" Link="temperature" />
+            </Module>
+         </extra>
+         <defShape typ="Rectangle" fcol="#FF9B8500" bgcol="#3BEFCD00" shadow="True" />
+         <icon rotate="False" flip="True" />
+      </block>
+      <block name="Zero" blockType="sisiBlock" x="545" y="35" w="45" h="20" bgCol="#40324D90" help="SIMBA#_Global_Block_Temperature_Zero.pdf" page="32">
+         <extra blockID="basmLib.asm_constBlock" HlpIdx="">
+            <Module id="Zero" subtype="Signal,1" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+               <parameters>
+                  <par id="Model" val="Signal" />
+                  <par id="Dimmension" val="1" />
+                  <par id="Constant_0" val="0" />
+                  <par id="unit_0" val="-" />
+                  <par id="sel_0" val="User defined" />
+                  <par id="displayUnits" val="false" />
+               </parameters>
+               <Pos x="567" y="45" z="0" />
+               <Output id="y" vis="False" Link="zero" />
+            </Module>
+         </extra>
+         <defShape typ="Rectangle" fcol="#FF9B8500" bgcol="#3BEFCD00" shadow="True" />
+         <icon rotate="False" flip="True" />
+      </block>
+      <block name="SC" blockType="sisiBlock" x="815" y="250" w="60" h="50" drawFrame="False" flipName="True" help="simba#_manual_referenz.xps" page="22">
+         <extra blockID="basmLib.asm_sciBlockTS2" HlpIdx="">
+            <Anno>DQo=</Anno>
+            <Module id="SC" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_sciBlockTS2">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="TSSeffType" val="TSSeffConstant" />
+                  <par id="varTSSeff" val="0" />
+                  <par id="showInput" val="false" />
+               </parameters>
+               <Pos x="845" y="275" z="0" />
+               <Input id="yin" vis="True" Link="Pump1" LinkIdx="0" />
+               <Input id="qrs" vis="True" Link="Q_R" LinkIdx="0" />
+            </Module>
+         </extra>
+         <icon rotate="True" flip="True" name="wwtp_sc_pump_i.svg" x="0" y="0" w="1" h="1" scale="True" />
+      </block>
+      <block name="Mix" blockType="sisiBlock" x="425" y="225" w="25" h="50" drawFrame="False" drawName="False" help="SIMBA#_Global_Block_MIx.pdf" page="28">
+         <extra blockID="basmLib.asm_mixBlock" HlpIdx="">
+            <Module id="Mix" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_mixBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="type" val="classic" />
+                  <par id="nin" val="2" />
+               </parameters>
+               <Pos x="437" y="250" z="0" />
+               <Input id="u0" vis="True" Link="Pump" LinkIdx="1" />
+               <Input id="u1" vis="True" Link="SC" LinkIdx="1" />
+            </Module>
+         </extra>
+         <icon rotate="False" flip="True" />
+      </block>
+      <block name="Q_R" blockType="sisiBlock" x="760" y="275" w="30" h="30" bgCol="#F2EFEFEF" help="SIMBA#_Global_Block_Temperature_Zero.pdf" page="32">
+         <extra blockID="basmLib.asm_constBlock" HlpIdx="">
+            <Module id="Q_R" subtype="Signal,1" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+               <parameters>
+                  <par id="Model" val="Signal" />
+                  <par id="Dimmension" val="1" />
+                  <par id="Constant_0" val="18" />
+                  <par id="unit_0" val="-" />
+                  <par id="sel_0" val="User defined" />
+                  <par id="displayUnits" val="false" />
+               </parameters>
+               <Pos x="775" y="290" z="0" />
+            </Module>
+         </extra>
+         <defShape typ="Rectangle" fcol="#FF606060" bgcol="#26606060" shadow="True" />
+         <icon rotate="False" flip="True" />
+      </block>
+      <block name="Pump1" blockType="sisiBlock" x="645" y="245" w="20" h="35" drawFrame="False" drawName="False" flipName="True" help="SIMBA#_Global_Block_Pump.pdf" page="29">
+         <extra blockID="basmLib.asm_pumpBlock" HlpIdx="">
+            <Anno>DQo=</Anno>
+            <Module id="Pump1" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_pumpBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+               </parameters>
+               <Pos x="655" y="262" z="0" />
+               <Input id="yin" vis="True" Link="AS" LinkIdx="0" />
+               <Input id="qpu" vis="True" Link="Q_WAS" LinkIdx="0" />
+            </Module>
+         </extra>
+         <icon rotate="True" flip="True" name="wwtp_pump2.svg" x="0" y="0" w="1" h="1" scale="True" />
+      </block>
+      <block name="Pulse1" blockType="sisiBlock" x="440" y="340" w="30" h="30" drawName="False" help="simba#_manual_referenz.xps" page="42">
+         <extra blockID="signalLib.pulse" HlpIdx="">
+            <Module id="Pulse1" subtype="" Assambly="signalLib.dll" Class="signalLib.pulse">
+               <parameters>
+                  <par id="A" val="1.0" />
+                  <par id="T" val="864000000000" />
+                  <par id="Toff" val="72000000000" />
+                  <par id="fon" val="50" />
+                  <par id="inunit" val="-" />
+               </parameters>
+               <Pos x="455" y="355" z="0" />
+            </Module>
+         </extra>
+         <defShape typ="Rectangle" fcol="#FF606060" bgcol="#26606060" shadow="True" />
+         <icon rotate="False" flip="False" name="sig_pulse_s.svg" x="0" y="0" w="1" h="1" scale="False" />
+      </block>
+      <block name="Q_WAS" blockType="sisiBlock" x="495" y="340" w="50" h="30" help="simba#_manual_referenz.xps" page="47">
+         <extra blockID="signalLib.Gain" HlpIdx="">
+            <Module id="Q_WAS" subtype="" Assambly="signalLib.dll" Class="signalLib.Gain">
+               <parameters>
+                  <par id="n" val="1" />
+                  <par id="K" val="6.73/2.5*2" />
+                  <par id="inunit" val="-" />
+                  <par id="outunit" val="-" />
+               </parameters>
+               <Pos x="520" y="355" z="0" />
+               <Input id="u" vis="True" Link="Pulse1" LinkIdx="0" />
+            </Module>
+         </extra>
+         <defShape typ="Arrow" fcol="#FF606060" bgcol="#26606060" var1="0.2" shadow="True" />
+         <icon rotate="True" flip="False" />
+      </block>
+      <block name="WAS" blockType="sisiBlock" x="680" y="295" w="20" h="10" help="SIMBA#_Global_Block_Sink.pdf" page="30">
+         <extra blockID="basmLib.asm_sinkBlock" HlpIdx="">
+            <Anno>DQo=</Anno>
+            <Module id="WAS" subtype="model_B" Assambly="basmLib.dll" Class="basmLib.asm_sinkBlock">
+               <parameters>
+                  <par id="Model" val="model_B" />
+                  <par id="size" val="5" />
+                  <par id="sinktype" val="Effluent" />
+                  <par id="display" val="false" />
+                  <par id="feedThrough" val="false" />
+                  <par id="plotStyle" val="Classic" />
+               </parameters>
+               <Pos x="690" y="300" z="0" />
+               <Input id="u" vis="True" Link="Pump1" LinkIdx="1" />
+            </Module>
+         </extra>
+         <defShape typ="Arrow" lWidth="1.5" fcol="#FF0049C3" bgcol="#180049C3" var1="0.2" shadow="True" />
+         <icon rotate="True" flip="False" />
+      </block>
+   </blocks>
+   <lines>
+      <line lineType="Signal" fgCol="#FFB3B3B3" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Pulse" SrcIdx="0" DstName="Q" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="170" y="315" />
+         </points>
+      </line>
+      <line lineType="Signal" fgCol="#FFB3B3B3" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Q" SrcIdx="1" DstName="Pump" DstIdx="1" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="270" y="315" />
+            <point x="270" y="215" />
+         </points>
+      </line>
+      <line lineType="Signal" fgCol="#FFB3B3B3" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Q_R" SrcIdx="0" DstName="SC" DstIdx="1" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="805" y="290" />
+         </points>
+      </line>
+      <line lineType="Signal" fgCol="#FFB3B3B3" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Pulse1" SrcIdx="0" DstName="Q_WAS" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="485" y="355" />
+         </points>
+      </line>
+      <line lineType="Signal" fgCol="#FFB3B3B3" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Q_WAS" SrcIdx="1" DstName="Pump1" DstIdx="1" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="595" y="355" />
+            <point x="595" y="270" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="influent conc." SrcIdx="0" DstName="Pump" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="270" y="195" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Pump" SrcIdx="2" DstName="effluent1" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="345" y="195" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Pump" SrcIdx="3" DstName="Mix" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="290" y="235" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Mix" SrcIdx="2" DstName="AS" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="460" y="250" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Pump1" SrcIdx="3" DstName="WAS" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="655" y="300" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="SC" SrcIdx="2" DstName="effluent" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="920" y="250" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="SC" SrcIdx="3" DstName="Mix" DstIdx="1" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="845" y="440" />
+            <point x="390" y="440" />
+            <point x="390" y="260" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="AS" SrcIdx="1" DstName="Pump1" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="635" y="250" />
+         </points>
+      </line>
+      <line lineType="model_B" lineExtra="5" fgCol="#FF0000FF" bgCol="#FFFFFFFF" width="1" drawLabel="False" flipLabel="False" SrcName="Pump1" SrcIdx="2" DstName="SC" DstIdx="0" label="">
+         <font Family="Arial" Style="Normal" Weight="Normal" Strech="Normal" Size="10" />
+         <points>
+            <point x="805" y="250" />
+         </points>
+      </line>
+   </lines>
+</Diagram>

@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Model id="CSTR_model_D" version="4.3.15">
+   <scale useRoot="False" projection="WGS84" typ="No" />
+   <gloParDefs />
+   <Modules>
+      <Module id="influent conc." subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="SO" val="0" />
+            <par id="SS" val="110" />
+            <par id="SNH" val="10" />
+            <par id="SNO" val="0" />
+            <par id="XS" val="330" />
+            <par id="XI" val="100" />
+            <par id="XH" val="0" />
+            <par id="XBA" val="0" />
+            <par id="Q" val="1000" />
+            <par id="displayUnits" val="false" />
+         </parameters>
+         <Pos x="175" y="195" z="0" />
+      </Module>
+      <Module id="effluent" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_sinkBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="size" val="9" />
+            <par id="sinktype" val="Effluent" />
+            <par id="display" val="false" />
+            <par id="feedThrough" val="false" />
+            <par id="plotStyle" val="Classic" />
+         </parameters>
+         <Pos x="940" y="250" z="0" />
+         <Input id="u" vis="True" Link="SC" LinkIdx="0" />
+      </Module>
+      <Module id="set model parameter" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_setASMpars">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="____dymmy_par" val="0.0" />
+            <par id="mu_maxH" val="4" />
+            <par id="YH" val="0.67" />
+            <par id="bH" val="0.6" />
+            <par id="K_S" val="5" />
+            <par id="kh" val="2" />
+            <par id="Kx" val="0.04" />
+            <par id="f_p" val="0.08" />
+            <par id="mu_maxA" val="1" />
+            <par id="K_NH_H" val="0.1" />
+            <par id="K_NH_A" val="1" />
+            <par id="YA" val="0.24" />
+            <par id="bA" val="0.1" />
+            <par id="i_NBM" val="0.08" />
+         </parameters>
+         <Pos x="392" y="47" z="0" />
+      </Module>
+      <Module id="effluent1" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_sinkBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="size" val="9" />
+            <par id="sinktype" val="Effluent" />
+            <par id="display" val="false" />
+            <par id="feedThrough" val="false" />
+            <par id="plotStyle" val="Classic" />
+         </parameters>
+         <Pos x="365" y="195" z="0" />
+         <Input id="u" vis="True" Link="Pump" LinkIdx="0" />
+      </Module>
+      <Module id="Pulse" subtype="" Assambly="signalLib.dll" Class="signalLib.pulse">
+         <parameters>
+            <par id="A" val="1.0" />
+            <par id="T" val="864000000000" />
+            <par id="Toff" val="72000000000" />
+            <par id="fon" val="50" />
+            <par id="inunit" val="-" />
+         </parameters>
+         <Pos x="140" y="315" z="0" />
+      </Module>
+      <Module id="Q" subtype="" Assambly="signalLib.dll" Class="signalLib.Gain">
+         <parameters>
+            <par id="n" val="1" />
+            <par id="K" val="2*18" />
+            <par id="inunit" val="-" />
+            <par id="outunit" val="-" />
+         </parameters>
+         <Pos x="197" y="315" z="0" />
+         <Input id="u" vis="True" Link="Pulse" LinkIdx="0" />
+      </Module>
+      <Module id="AS" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_cstrBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="Vol" val="6.73" />
+            <par id="h" val="1" />
+            <par id="isvar" val="true" />
+            <par id="showvol" val="true" />
+            <par id="advancedInfo" val="true" />
+            <par id="advancedInfoRates" val="true" />
+            <par id="calculateOUR" val="true" />
+            <par id="allowIO2input" val="false" />
+            <par id="animateAeration" val="true" />
+            <par id="zeroCrossing" val="false" />
+            <par id="Khyd" val="2000" />
+         </parameters>
+         <Pos x="495" y="265" z="0" />
+         <Input id="u" vis="True" Link="Mix" LinkIdx="0" />
+      </Module>
+      <Module id="T_water" subtype="Signal,1" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+         <parameters>
+            <par id="Model" val="Signal" />
+            <par id="Dimmension" val="1" />
+            <par id="Constant_0" val="20" />
+            <par id="unit_0" val="-" />
+            <par id="sel_0" val="User defined" />
+            <par id="displayUnits" val="false" />
+         </parameters>
+         <Pos x="502" y="45" z="0" />
+         <Output id="y" vis="False" Link="temperature" />
+      </Module>
+      <Module id="Zero" subtype="Signal,1" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+         <parameters>
+            <par id="Model" val="Signal" />
+            <par id="Dimmension" val="1" />
+            <par id="Constant_0" val="0" />
+            <par id="unit_0" val="-" />
+            <par id="sel_0" val="User defined" />
+            <par id="displayUnits" val="false" />
+         </parameters>
+         <Pos x="567" y="45" z="0" />
+         <Output id="y" vis="False" Link="zero" />
+      </Module>
+      <Module id="Q_R" subtype="Signal,1" Assambly="basmLib.dll" Class="basmLib.asm_constBlock">
+         <parameters>
+            <par id="Model" val="Signal" />
+            <par id="Dimmension" val="1" />
+            <par id="Constant_0" val="18" />
+            <par id="unit_0" val="-" />
+            <par id="sel_0" val="User defined" />
+            <par id="displayUnits" val="false" />
+         </parameters>
+         <Pos x="775" y="290" z="0" />
+      </Module>
+      <Module id="Pulse1" subtype="" Assambly="signalLib.dll" Class="signalLib.pulse">
+         <parameters>
+            <par id="A" val="1.0" />
+            <par id="T" val="864000000000" />
+            <par id="Toff" val="72000000000" />
+            <par id="fon" val="50" />
+            <par id="inunit" val="-" />
+         </parameters>
+         <Pos x="455" y="355" z="0" />
+      </Module>
+      <Module id="Q_WAS" subtype="" Assambly="signalLib.dll" Class="signalLib.Gain">
+         <parameters>
+            <par id="n" val="1" />
+            <par id="K" val="6.73/2.5*2" />
+            <par id="inunit" val="-" />
+            <par id="outunit" val="-" />
+         </parameters>
+         <Pos x="520" y="355" z="0" />
+         <Input id="u" vis="True" Link="Pulse1" LinkIdx="0" />
+      </Module>
+      <Module id="WAS" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_sinkBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="size" val="9" />
+            <par id="sinktype" val="Effluent" />
+            <par id="display" val="false" />
+            <par id="feedThrough" val="false" />
+            <par id="plotStyle" val="Classic" />
+         </parameters>
+         <Pos x="690" y="300" z="0" />
+         <Input id="u" vis="True" Link="Pump1" LinkIdx="1" />
+      </Module>
+      <Module id="Pump" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_pumpBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+         </parameters>
+         <Pos x="290" y="207" z="0" />
+         <Input id="yin" vis="True" Link="influent conc." LinkIdx="0" />
+         <Input id="qpu" vis="True" Link="Q" LinkIdx="0" />
+      </Module>
+      <Module id="Pump1" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_pumpBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+         </parameters>
+         <Pos x="655" y="262" z="0" />
+         <Input id="yin" vis="True" Link="AS" LinkIdx="0" />
+         <Input id="qpu" vis="True" Link="Q_WAS" LinkIdx="0" />
+      </Module>
+      <Module id="SC" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_sciBlockTS2">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="TSSeffType" val="TSSeffConstant" />
+            <par id="varTSSeff" val="0" />
+            <par id="showInput" val="false" />
+         </parameters>
+         <Pos x="845" y="275" z="0" />
+         <Input id="yin" vis="True" Link="Pump1" LinkIdx="0" />
+         <Input id="qrs" vis="True" Link="Q_R" LinkIdx="0" />
+      </Module>
+      <Module id="Mix" subtype="model_D" Assambly="basmLib.dll" Class="basmLib.asm_mixBlock">
+         <parameters>
+            <par id="Model" val="model_D" />
+            <par id="type" val="classic" />
+            <par id="nin" val="2" />
+         </parameters>
+         <Pos x="437" y="250" z="0" />
+         <Input id="u0" vis="True" Link="Pump" LinkIdx="1" />
+         <Input id="u1" vis="True" Link="SC" LinkIdx="1" />
+      </Module>
+   </Modules>
+</Model>
