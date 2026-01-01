@@ -1,5 +1,6 @@
 ---
 title: "Ekama-Marais experiment model C"
+author: "Markus Ahnert, markus.ahnert@tu-dresden.de"
 output: html_document
 runtime: shiny
 ---
@@ -46,12 +47,6 @@ get_plot_labels <- function(columns) {
 }
 ```
 
-  
-  
-  
-Markus Ahnert, Technische Universität Dresden, Institut für Siedlungs- und Industriewasserwirtschaft\
-[markus.ahnert\@tu-dresden.de](mailto:markus.ahnert@tu-dresden.de)
-  
   
 This App is the follow up of the model version B.  
   

@@ -25,6 +25,7 @@ library(shinyjs)
 # https://www.youtube.com/watch?v=BtWQ4Kk1opg Tutorial for theoretical considerations regarding effluent calculation
 ```
 
+
 ### Motivation
 
 This interactive Shiny app demonstrates the dynamic behavior of a simple **water tank with delayed, nonlinear discharge**.
@@ -39,12 +40,6 @@ We have a tank with a volume $V(t)$ with following conditions:
 -   constant influent $Q_{in}$
 -   start of effluent at a certain time $t_{start}$
 -   nonlinear behaviour of effluent discharge
-
-```{r wd_check, echo=FALSE}
-cat("getwd():", getwd(), "\n")
-cat("Files:", paste(list.files(), collapse = ", "))
-```
-
 
 ![Figure 1: System definiton](www/storage_model_image.png)
 
@@ -149,12 +144,12 @@ fluidRow(
 )
 ```
 
-------------------------------------------------------------------------
-
 ```{r server, server=TRUE, echo=FALSE, message=FALSE}
 output$tankPlot <- renderPlot({
   df <- tank_sim()
 
+  par(mar = c(5, 4, 4, 6))  # <<<<<< WICHTIG  
+  
   plot(df$time, df$V,
        type = "l",
        lwd = 2,
@@ -174,8 +169,8 @@ output$tankPlot <- renderPlot({
        ylab = "")
 
   axis(side = 4, col = "black", col.axis = "black")
-  mtext("Effluent Q_out [m³ h-1]", side = 4, line = 3, col = "black")
-
+  mtext(expression(paste("Effluent Q"[out], " [m"^3, " h"^-1, "]")),
+      side = 4, line = 3, col = "black")
   legend("topright",
          legend = c("Tank volume", "Effluent flow rate"),
          col = c("blue", "black"),
@@ -193,29 +188,8 @@ plotOutput("tankPlot", height = "450px")
 
 ------------------------------------------------------------------------
 
-### Interpretation
+###  Notes
 
-```{r text3, server=TRUE, echo=FALSE, message=FALSE}
-output$infoText <- renderUI({
-  tagList(
-    p(strong("Abflussbeginn bei:"), paste0(" t = ", input$t_start, " h.")),
-    p("Vor dem Abfluss steigt das Volumen linear an, da ein konstanter Zufluss vorliegt."),
-    p("Nach Beginn des Abflusses stellt sich aufgrund des nichtlinearen Abflussgesetzes ",
-      "schrittweise ein stationärer Zustand ein.")
-  )
-})
-```
-
-```{r ui_text, echo=FALSE, message=FALSE}
-uiOutput("infoText")
-```
-
-------------------------------------------------------------------------
-
-### Hinweise
-
--   Vor $t_{start}$ entspricht das System einem reinen Speicher.
--   Nach $t_{start}$ stellt sich ein stationärer Zustand ein, wenn $Q_{in} = Q_{out}$.
--   Das Modell ist mathematisch einfach, zeigt aber typische Eigenschaften realer Abflusssysteme.
-
-------------------------------------------------------------------------
+-   Before $t_{start}$, the system corresponds only to storage.
+-   After $t_{start}$, a steady state is reached when $Q_{in} = Q_{out}$.
+-   The model is mathematically simple, but exhibits typical characteristics of real drainage systems.

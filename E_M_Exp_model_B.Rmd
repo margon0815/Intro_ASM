@@ -1,5 +1,6 @@
 ---
 title: "Ekama-Marais experiment model B"
+author: "Markus Ahnert, markus.ahnert@tu-dresden.de"
 output: html_document
 runtime: shiny
 ---
@@ -27,11 +28,7 @@ library(shinyjs)
 ```
   
   
-  
-Markus Ahnert, Technische Universität Dresden, Institut für Siedlungs- und Industriewasserwirtschaft\
-[markus.ahnert\@tu-dresden.de](mailto:markus.ahnert@tu-dresden.de)
-  
-  
+
 This App is the follow up of the first version model A.  
   
   

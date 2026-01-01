@@ -1,5 +1,6 @@
 ---
 title: "Ekama-Marais experiment model A"
+author: "Markus Ahnert, markus.ahnert@tu-dresden.de"
 output: html_document
 runtime: shiny
 ---
@@ -46,11 +47,7 @@ get_plot_labels <- function(columns) {
 }
 ```
   
-  
-Markus Ahnert, Technische Universität Dresden, Institut für Siedlungs- und Industriewasserwirtschaft\
-[markus.ahnert\@tu-dresden.de](mailto:markus.ahnert@tu-dresden.de)
-  
-  
+
 ### Background
 Activated sludge models were developed since 1960/70 at different research institutions. The Department of Civil Engineering, University of Cape Town, South Africa, played a major role in this.
 It was there that key principles were developed that can be found today in the well-known activated sludge models.
