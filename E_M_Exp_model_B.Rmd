@@ -36,18 +36,23 @@ This App is the follow up of the first version model A.
   
   
 ### Model description
-In model version A it was obvious that there is no good fit. The rise and decline of OUR was to sharp. We need some processes to slow down the dynamics. This can be done with a hydrolysis process. A part of substrate (new fraction XS; see figure 1) from influent is not readily biodegradable but needs to be converted first. This hydrolysis process is modelled surface-dependent from the available biomass. Additional parameters kh as speed of hydrolysis and Kx as half saturation value are necessary.  
+In model version A it was obvious that there is no good fit. The rise and decline of OUR was to sharp. We need some processes to slow down the dynamics. This can be done with a hydrolysis process. A part of substrate (new component X~S~; see figure 1) from influent is not readily biodegradable but needs to be converted first. This hydrolysis process is modeled surface-dependent from the available biomass. Additional parameters k~h~ as speed of hydrolysis and K~x~ as half saturation value are necessary.  
+
+Due to the new model component the influent is distributed between S~S~ (110 g m^-3^COD) and X~S~ (430 g m^-3^COD). This distribution can be estimated based on batch respiration tests. See further literature on parameter estimation of activated sludge models for more details.
   
-  
+
 ![Figure 1: Model matrix](www/model_b.png){width=50%}
   
-  
+
 ### Model application
-Depending on the speed of the hydrolysis process the smoothing of OUR can be influenced.
+Depending on the speed of the hydrolysis process the smoothing of OUR can be influenced. The hydrolysis is faster if a high concentration of X~S~ is in the reactor or the ratio X~S~/X~H~ becomes larger. 
+With this model a quite good fit of measured and modeled OUR can be found if the correct parameters were selected.
+Although the model looks good with the correct parameters, it does not correspond to the actual experiment. The model's biomass concentration (approximately 1,520 g m^-3^ COD) is significantly lower than the concentration measured in the test plant (approximately 2,100 g m^-3^ COD). Therefore, the model must be expanded to accurately describe sludge production. This is accomplished in model C.
   
   
 ### Tasks
 
+* Try to calibrate the model by changing the parameters k~h~ and k~x~. All others shall remain constant.
 * Describe the quality of model fit! What is improved? Are there deficits left?
 * How do you have to select parameters for hydrolysis to minimize the influence of hydrolysis (this should result in a similar model output like model A)?  
 
@@ -57,7 +62,7 @@ Depending on the speed of the hydrolysis process the smoothing of OUR can be inf
 # ===== start of definitions and initialization
 
 # measured OUR data 
-OUR<-read_excel("measured_OUR.xlsx","Tabelle1")
+OUR<-read.csv("measured_OUR.csv", sep = ";")
 
 # define ODE function
 model_ode <- function(t, state, params, influentfcn, wasfcn) {
@@ -127,32 +132,36 @@ shinyApp(
 fluidRow(
   column(4,
          numericInput(inputId = "YH",
-                      label = HTML("heterotrophic yield YH [-]:"),
+                      label = HTML("heterotrophic yield Y<sub>H</sub> [-]:"),
                       value = 0.67, min=0.00001, max=0.999999, step=0.1),
          numericInput(inputId = "mumax",
-                      label = HTML("max. growth rate mumax [d-1]:"),
+                      label = HTML("max. growth rate µ<sub>max</sub> [d<sup>-1</sup>]:"),
                       value = 4, min=0, step=0.2),
          numericInput(inputId = "Ks",
-                      label = HTML("half saturation constant Ks [g m-3]:"),
+                      label = HTML("half saturation constant K<sub>s</sub> [g m<sup>-3</sup>]:"),
                       value = 5, min=0),
   ),
   column(4, 
          numericInput(inputId = "bH",
-                      label = HTML("decay rate bH [d-1]:"),
+                      label = HTML("decay rate b<sub>H</sub> [d<sup>-1</sup>]:"),
                       value = 0.6, min=0, step=0.1),
          numericInput(inputId = "kh",
-                      label = HTML("max. hydrolysis rate kh [d-1]:"),
-                      value = 2, min=0, step=0.2),
+                      label = HTML("max. hydrolysis rate k<sub>h</sub> [d<sup>-1</sup>]:"),
+                      value = 1, min=0, step=0.2), # calibrated value 2
          numericInput(inputId = "Kx",
-                      label = HTML("half saturation value Kx [-]:"),
-                      value = 0.04, min=0, step=0.01),
+                      label = HTML("half saturation value K<sub>x</sub> [-]:"),
+                      value = 0.01, min=0, step=0.01), # calibrated value 0.04
   ),
   column(4,
          numericInput(inputId = "SRT",
                       label = HTML("sludge retention time SRT [d]:"),
                       value = 2.5, min=0),
          
-         actionButton("resetAll", "Reset all"),         
+         # Leeres Label für Ausrichtung
+         div(style = "margin-top: 40px;",
+             actionButton("resetAll", "Reset all")
+            )
+         
   ),
   plotOutput("ConcPlot1"),
   

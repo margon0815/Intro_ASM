@@ -26,6 +26,26 @@ library(shinyjs)
 # Evolution of activated sludge model based on experiments and model development by Ekama and Marais (1978)
 # as published by Gujer and Henze (1991)
 ```
+
+```{r, echo=FALSE, message=FALSE}
+# zentral für die gesamte App
+plot_labels_all <- c(
+  "SS_AS"       = "Biodegradable substrate SS",
+  "XBH_AS"      = "Heterotrophic biomass XBH",
+  "OUR.SS_AS"   = "Respiration rate OUR",
+  "SNH_AS"      = "Ammonia nitrogen NH4-N",
+  "SNO_AS"      = "Nitrate nitrogen NO3-N",
+  "XS_AS"       = "Slowly degradable substrate XS",
+  "XI_AS"       = "Particulate inert COD XI",
+  "XBA_AS"      = "Autotrophic biomass XBA"
+)
+
+get_plot_labels <- function(columns) {
+  # columns = Vektor interner Variablennamen, z.B. c("SS_AS","XBH_AS","OUR.SS_AS")
+  plot_labels_all[columns]
+}
+```
+
   
   
   
@@ -38,20 +58,23 @@ This App is the follow up of the model version B.
   
 ### Model description
 In model version B the fit of OUR between measurement and model result was very good. Unfortunately, however, the activated sludge concentration was far too low. Therefore, an additional fraction is required that enables a realistic representation of sludge production.
-When the biomass dies, part of it is shifted to this new fraction so that this fraction can accumulate in the system over time. The parameter f~P~ influences this fraction.
+When the biomass decays, part of it is shifted to this new fraction so that this fraction can accumulate in the system over time. The parameter f~P~ influences this fraction.
 
+A certain proportion of the inflow is assigned to the new fraction X~I~. This means that part of the particulate COD from the inflow is not relevant for material conversion, but contributes to sludge production.
+
+The influent is further fractionated into S~S~ (110 g m^-3^COD), X~S~ (330 g m^-3^COD) and  X~I~ (100 g m^-3^COD).
 
   
 ![Figure 1: Model matrix](www/model_c.png){width=50%}
   
   
 ### Model application
-Depending on the parameter f~P~ the sludge mass in the system is influenced. This has only a minor influence on the OUR. The part of XH that is converted into the fraction XI is no longer affected by degradation or growth processes.
+Depending on the parameter f~P~ the sludge mass in the system is influenced. This has only a small direct influence on the OUR. The part of X~H~ that is converted into the fraction X~I~ is no longer affected by degradation or growth processes. The main reason for the general negative offset in modeled OUR results from the unbiodegradable part of the influent originating from X~I~.
   
   
 ### Tasks
 
-* ###
+* If you try to fit OUR with parameter modifications, which parameter(s) give the largest effect - a) for overall OUR and b) for OUR especially in period with active influent (peak)?
 
 
 ```{r shiny_bsp1, echo=FALSE}
@@ -59,7 +82,7 @@ Depending on the parameter f~P~ the sludge mass in the system is influenced. Thi
 # ===== start of definitions and initialization
 
 # measured OUR data 
-OUR<-read_excel("measured_OUR.xlsx","Tabelle1")
+OUR<-read.csv("measured_OUR.csv", sep = ";")
 
 # define ODE function
 model_ode <- function(t, state, params, influentfcn, wasfcn) {
@@ -138,41 +161,49 @@ shinyApp(
 fluidRow(
   column(4,
          numericInput(inputId = "YH",
-                      label = HTML("heterotrophic yield YH [-]:"),
+                      label = HTML("heterotrophic yield Y<sub>H</sub> [-]:"),
                       value = 0.67, min=0.00001, max=0.999999, step=0.1),
          numericInput(inputId = "mumax",
-                      label = HTML("max. growth rate mumax [d-1]:"),
+                      label = HTML("max. growth rate µ<sub>max</sub> [d<sup>-1</sup>]:"),
                       value = 4, min=0, step=0.2),
          numericInput(inputId = "Ks",
-                      label = HTML("half saturation constant Ks [g m-3]:"),
+                      label = HTML("half saturation constant K<sub>s</sub> [g m<sup>-3</sup>]:"),
                       value = 5, min=0),
   ),
   column(4, 
          numericInput(inputId = "bH",
-                      label = HTML("decay rate bH [d-1]:"),
+                      label = HTML("decay rate b<sub>H</sub> [d<sup>-1</sup>]:"),
                       value = 0.6, min=0, step=0.1),
          numericInput(inputId = "kh",
-                      label = HTML("max. hydrolysis rate kh [d-1]:"),
+                      label = HTML("max. hydrolysis rate k<sub>h</sub> [d<sup>-1</sup>]:"),
                       value = 2, min=0, step=0.2),
          numericInput(inputId = "Kx",
-                      label = HTML("half saturation value Kx [-]:"),
+                      label = HTML("half saturation value K<sub>x</sub> [-]:"),
                       value = 0.04, min=0, step=0.01),
   ),
   column(4,
          numericInput(inputId = "fP",
-                      label = HTML("inert fraction of dead biomass fP [-]:"),
+                      label = HTML("inert fraction of dead biomass f<sub>P</sub> [-]:"),
                       value = 0.08, min=0, max=1, step=0.05),
          numericInput(inputId = "SRT",
                       label = HTML("sludge retention time SRT [d]:"),
                       value = 2.5, min=0),
          
-         actionButton("resetAll", "Reset all"),         
+         # Leeres Label für Ausrichtung
+         div(style = "margin-top: 40px;",
+             actionButton("resetAll", "Reset all")
+            )
+  )
+),
+fluidRow(
+    plotOutput("ConcPlot2")
   ),
-  plotOutput("ConcPlot1"),
-  
-)
 
-),  
+fluidRow(
+    plotOutput("ConcPlot1")
+  )  
+),
+
   server = function(input, output) {
 
 observeEvent(input$resetAll, {
@@ -239,26 +270,51 @@ wasfun <- approxfun(wasdata_extended$time, wasdata_extended$value, method = "con
 # solve ODE
 out = ode(y = state_0, times = t_points, func = model_ode, parms = params, influentfcn=influentfun, wasfcn=wasfun)
       
-# plot some results
-df <- as.data.frame(out)
-ylimits <- list(c(0, max(df$SS_AS[df$time >= 49])), 
-                c(0, max(df$XS_AS[df$time >= 49])), 
-                c(min(df$XI_AS[df$time >= 49]), max(df$XI_AS[df$time >= 49])), 
-                c(min(df$XBH_AS[df$time >= 49]), max(df$XBH_AS[df$time >= 49])),
-                c(0, max(df$OUR.SS_AS[df$time >= 49],OUR$OUR.SS_AS)))
-
-par(mar=c(5,5,5,5))
-plot1 <-plot(out, which = c("SS_AS","XS_AS","XI_AS","XBH_AS","OUR.SS_AS"),xlab = "Time [d]", 
-             ylab = expression("Concentration [g m"^"-3"*"]")
-             ,xlim=c(49,50), ylim=ylimits,obs=list(as.data.frame(OUR)),
-              cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5)             
-
-    # Rückgabe der Plots als Liste
-    list(plot1 = plot1)
+    # Rückgabe der Simergebnisse als Liste
+    list(out = out)
 })
 
     output$ConcPlot1 <- renderPlot({
-      plots()$plot1
+      par(mfrow = c(1,1))
+      par(mar = c(5,5,5,5) )
+      out <- plots()$out
+      df <- as.data.frame(out)
+      ylimits <- list(c(0, max(df$SS_AS[df$time >= 49])), 
+                c(min(df$XS_AS[df$time >= 49]), max(df$XS_AS[df$time >= 49])),
+                c(min(df$XBH_AS[df$time >= 49]), max(df$XBH_AS[df$time >= 49])),
+                c(min(df$XI_AS[df$time >= 49]), max(df$XI_AS[df$time >= 49])))
+
+      columns_plot <- c("SS_AS","XS_AS","XBH_AS","XI_AS")
+      
+      labels_plot <- get_plot_labels(columns_plot)
+
+      plot(out, which = columns_plot,    # interne Namen
+               main  = labels_plot,             # Anzeige-Titel 
+              ylab = expression("Concentration [g m"^"-3"*"]"),xlim=c(49,50),
+              ylim=ylimits,obs=list(as.data.frame(OUR)),
+              cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5)
+
+            
+    })
+
+    output$ConcPlot2 <- renderPlot({
+      par(mfrow = c(1,1))
+      par(mar = c(5,5,5,5) )
+      out <- plots()$out
+      df <- as.data.frame(out)
+      ylimits <- list(c(0, max(df$OUR.SS_AS[df$time >= 49],OUR$OUR.SS_AS)))
+
+      columns_plot <- c("OUR.SS_AS")
+      
+      labels_plot <- get_plot_labels(columns_plot)
+
+      plot(out, which = columns_plot,    # interne Namen
+               main  = labels_plot,             # Anzeige-Titel 
+              ylab = expression("Concentration [g m"^"-3"*"]"),xlim=c(49,50),
+              ylim=ylimits,obs=list(as.data.frame(OUR)),
+              cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5)
+
+      
     })
   }
   

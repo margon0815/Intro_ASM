@@ -32,7 +32,7 @@ library(shinyjs)
 plot_labels_all <- c(
   "SS_AS"       = "Biodegradable substrate SS",
   "XBH_AS"      = "Heterotrophic biomass XBH",
-  "OUR.SS_AS"   = "Respiration OUR",
+  "OUR.SS_AS"   = "Respiration rate OUR",
   "SNH_AS"      = "Ammonia nitrogen NH4-N",
   "SNO_AS"      = "Nitrate nitrogen NO3-N",
   "XS_AS"       = "Slowly degradable substrate XS",
@@ -63,8 +63,10 @@ The results of one of these experiments are used for the subsequent model develo
 * Ekama, G.A., Marais, G.V.R. (1977). The activated sludge process part II-Dynamic behaviour. Water SA, 3(1), 18-52.
 * Ekama, G.A., & Marais, G.V.R. (1979). Dynamic behavior of the activated sludge process. Journal Water Pollution Control Federation, 534-556.
   
-The experiments were carried out in a lab scale reactor with a volume of 6.73 L and a secondary clarifier for solids separation. The system was operated in a cyclic mode with influent flow from 2 am to 2 pm. In the same time the excess sludge was withdrawn direct from the activated sludge reactor. The scheme can be found in figure 1 from the original publication and in a modified version for use in this context. The index AS represents the activated sludge reactor, SC the secondary clarifier.
+The experiments were carried out in a lab scale reactor with a volume of 6.73 L and a secondary clarifier for solids separation. The system was operated in a cyclic mode with influent flow from 2 am to 2 pm. In the same time the waste activated sludge Q~WAS~ was withdrawn direct from the activated sludge reactor. The scheme can be found in figure 1 from the original publication and in a modified version for use in this context. The index AS represents the activated sludge reactor, SC the secondary clarifier.
 The reactor was aerated to a sufficient oxygen concentration. Samples were taken from the effluent and from the extracted activated sludge. The respiration rate in the reactor was also measured as a key parameter. This serves as the main comparative variable for the subsequent model development. 
+
+The influent has a COD concentration of 540 g m^-3^.
 
   
 ![Figure 1: Left: Experimental layout (from Ekama and Marais, 1977), Right: modified for use in mass balances](www/schemata_original_actual.png)
@@ -75,7 +77,9 @@ The reactor was aerated to a sufficient oxygen concentration. Samples were taken
 As already described in another app, the mass transport for the model can be modeled via a mass balance of the aeration tank - secondary clarifier system. The differential equations contained therein can be used for this purpose. The individual process rates must now be integrated into the equations for the biological conversion processes. 
 This involves fractionating the organic components of the influent or the biomass into different model fractions.
 The first model version A contains the easily degradable substrate SS and the heterotrophic biomass in fraction XH. Oxygen is included in fraction SO to determine the respiration rate.
-  
+
+The complete COD from influent is assigned to model fraction S~S~. The influent contains no additional biomass. The biomass in the reactor originates from the  prior day.
+
 &NewLine; 
   
 &NewLine; 
@@ -91,19 +95,70 @@ Two processes are defined:
 
 When biomass grows, part of the substrate is used to generate energy. This is determined by the stoichiometric parameter YH (heterotrophic yield).
 When the biomass decays, the COD released in the process is completely converted back into degradable substrate.
+
+&NewLine; 
+
+The following code shows the ODE function of the defined model. It includes
+
+* dynamic flow rates (influent and WAS)
+* actual states variables 
+* calculation of process rates based on defined model in matrix 
+* calculation of derivatives as combination of transport processes and reactions
+
+This ODE function is solved for every time step depending on the selected parameters below.
+
+&NewLine;
+
+```{r ode_function}
+# define ODE function
+model_ode <- function(t, state, params, influentfcn, wasfcn) {
+  with(as.list(c(state, params)), {
+    # dynamic influent and WAS flow rate
+    Q <- influentfcn(t)
+    Q_WAS <- wasfcn(t)
+    
+    # state variables
+    SO_AS <- state[1]; SO_SC <- state[2]; SS_AS <- state[3]; SS_SC <- state[4]; XBH_AS <- state[5]; XBH_SC <- state[6]
+
+    # internal variables    
+    Monod_SS <- SS_AS/(SS_AS+Ks_SS)
+
+    # processrates
+    r_SO <- - ((1-1/YH)*(muH*Monod_SS*XBH_AS)) # switch to positive with minus: SO = negative COD
+    r_SS <- - 1/YH *     muH*Monod_SS*XBH_AS  + bBH*XBH_AS
+    r_XBH <-             muH*Monod_SS*XBH_AS  - bBH*XBH_AS
+        
+    # ODE equations
+    # SO oxygen - no transport (active calculation of aeration system) only change due to processes for OUR calculation
+    dSO_AS <- r_SO
+    dSO_SC <- 0
+    
+    # SS readily biodegradable substrate
+    dSS_AS <- Q/V_AS*SS_in + Q_R/V_AS*SS_SC - (Q+Q_R)/V_AS*SS_AS + r_SS
+    dSS_SC <- (Q+Q_R-Q_WAS)/V_SC*SS_AS - (Q+Q_R-Q_WAS)/V_SC*SS_SC
+
+    # XBH heterotrophic biomass
+    dXBH_AS <- Q/V_AS*XBH_in + Q_R/V_AS*XBH_SC - (Q+Q_R)/V_AS*XBH_AS + r_XBH
+    dXBH_SC <- (Q+Q_R-Q_WAS)/V_SC*XBH_AS - (Q_R)/V_SC*XBH_SC
+
+    # return derivatives and respiration rate OUR
+    list(c(dSO_AS, dSO_SC, dSS_AS, dSS_SC, dXBH_AS, dXBH_SC),OUR=dSO_AS)
+  })
+}
+```
   
   
 ### Model application
-The Yield YH determines the oxygen consumption required for biomass growth. The growth rate µmax determines the speed of growth. However, this is only the case with an unlimited supply of substrate.
-The decay rate bH and the sludge retention time SRT determine the biomass content in the reactor. This has a direct influence on the absolute growth of the biomass.
+The Yield Y~H~ determines the oxygen consumption required for biomass growth. The growth rate µ~max~ determines the speed of growth. However, this is only the case with an unlimited supply of substrate.
+The decay rate b~H~ and the sludge retention time SRT determine the biomass content X~BH~ in the reactor. This has a direct influence on the absolute growth of the biomass.
   
   
 ### Tasks
 
 * Evaluate the quality of the model fit! Describe things that could be improved!
-* Describe the change in oxygen uptake rate (respiration rate) OUR when YH is minimized or maximized!
-* When you increase the SRT what effect can be seen regarding the biomass content XH?
-* If the decay rate bH is increased what effect has this to the substrate concentration in the effluent?
+* Describe the change in oxygen uptake rate (respiration rate) OUR when Y~H~ is decreased or increased!
+* When you increase the SRT what effect can be seen regarding the biomass content X~H~? Can you explain the reason?
+* If the decay rate b~H~ is increased how does this effect the substrate concentration S~S~ in the effluent and the biomass X~H~ in the reactor? 
   
   
 
@@ -112,56 +167,7 @@ The decay rate bH and the sludge retention time SRT determine the biomass conten
 # ===== start of definitions and initialization
 
 # measured OUR data 
-OUR<-read_excel("measured_OUR.xlsx","Tabelle1")
-
-# define ODE function
-model_ode <- function(t, state, params, influentfcn, wasfcn) {
-  with(as.list(c(state, params)), {
-
-    # dynamic influent and WAS flow rate
-    Q <- influentfcn(t)
-    Q_WAS <- wasfcn(t)
-    
-    # state variables
-    SO_AS <- state[1]
-    SO_SC <- state[2]
-    
-    SS_AS <- state[3]
-    SS_SC <- state[4]
-    
-    XBH_AS <- state[5]
-    XBH_SC <- state[6]
-    
-    # internal variables    
-    Monod_SS <- SS_AS/(SS_AS+Ks_SS)
-
-    # processrates
-    
-    r_SO <- - ((1-1/YH)*(muH*Monod_SS*XBH_AS)) # switch to positive with minus: SO = negative COD
-    r_SS <- - 1/YH *     muH*Monod_SS*XBH_AS  + bBH*XBH_AS
-    r_XBH <-             muH*Monod_SS*XBH_AS  - bBH*XBH_AS
-        
-    # ODEs
-
-    # SO oxygen - no transport only change due toprocesses for OUR calculation
-    dSO_AS <- r_SO
-    dSO_SC <- 0
-    
-    # SS readily biodegradable substrate
-    dSS_AS <- Q/V_AS*SS_in + Q_R/V_AS*SS_SC - (Q+Q_R)/V_AS*SS_AS + r_SS
-    dSS_SC <- (Q+Q_R-Q_WAS)/V_SC*SS_AS - (Q+Q_R-Q_WAS)/V_SC*SS_SC
-
-    # heterotrophic biomass
-    dXBH_AS <- Q/V_AS*XBH_in + Q_R/V_AS*XBH_SC - (Q+Q_R)/V_AS*XBH_AS + r_XBH
-    dXBH_SC <- (Q+Q_R-Q_WAS)/V_SC*XBH_AS - (Q_R)/V_SC*XBH_SC
-    
-    
-    # return derivatives
-    list(c(dSO_AS, dSO_SC, dSS_AS, dSS_SC, dXBH_AS, dXBH_SC),OUR=dSO_AS)
-  })
-}
-
-
+OUR<-read.csv("measured_OUR.csv", sep = ";")
 
 shinyApp(
   
@@ -173,18 +179,18 @@ shinyApp(
 fluidRow(
   column(4,
          numericInput(inputId = "YH",
-                      label = HTML("heterotrophic yield YH [-]:"),
+                      label = HTML("heterotrophic yield Y<sub>H</sub> [-]:"),
                       value = 0.67, min=0.00001, max=0.999999, step=0.1),
          numericInput(inputId = "mumax",
-                      label = HTML("max. growth rate mumax [d-1]:"),
+                      label = HTML("max. growth rate µ<sub>max</sub> [d<sup>-1</sup>]:"),
                       value = 4, min=0, step=0.2),
   ),
   column(4, 
          numericInput(inputId = "Ks",
-                      label = HTML("half saturation constant Ks [g m-3]:"),
+                      label = HTML("half saturation constant K<sub>s</sub> [g m<sup>-3</sup>]:"),
                       value = 5, min=0),
          numericInput(inputId = "bH",
-                      label = HTML("decay rate bH [d-1]:"),
+                      label = HTML("decay rate b<sub>H</sub> [d-1]:"),
                       value = 0.6, min=0, step=0.1),
   ),
   column(4,
@@ -192,7 +198,10 @@ fluidRow(
                       label = HTML("sludge retention time SRT [d]:"),
                       value = 2.5, min=0),
 
-         actionButton("resetAll", "Reset all"),
+         # Leeres Label für Ausrichtung
+         div(style = "margin-top: 40px;",
+             actionButton("resetAll", "Reset all")
+            )
   )
   
 ),
@@ -200,11 +209,9 @@ fluidRow(
     plotOutput("ConcPlot2")
   ),
 
-  fluidRow(
+fluidRow(
     plotOutput("ConcPlot1")
   )  
-
-
 ),  
   server = function(input, output) {
 

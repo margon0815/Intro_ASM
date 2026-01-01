@@ -38,20 +38,24 @@ This App is the follow up of the model version C and the last version of this mo
   
   
 ### Model description
-The adjustment in model version C led to a reduced respiration rate. In the previous model versions, only organic carbon degradation was taken into account. However, nitrate was also measured in the reactor, so that nitrification must be assumed as an additional oxygen-consuming process. The necessary fractions SNH and SNO as well as the growth and decay of the nitrifiers were added to model D.
+The adjustment in model version C led to a reduced respiration rate. In the previous model versions, only organic carbon degradation was taken into account. However, nitrate was also measured in the reactor, so that nitrification must be assumed as an additional oxygen-consuming process. The model component X~A~ representing autotrophic nitrifying biomass is added to model D. The necessary components S~NH~ and S~NO~ as well as the growth and decay of the nitrifiers were also added.
 
 
   
 ![Figure 1: Model matrix](www/model_d.png){width=50%}
   
   
-### Model application
-missing explanations ...
+### Model description
+Nitrifiers X~A~ grow directly on substrate S~NH~. They produce nitrate S~NO~ while using inorganic carbon from dissolved CO~2~ for build-up of cell mass (not integrated in the model). The decay process of nitrifiers is similar to heterotrophic biomass. Ammonia S~NH~ is also used for cell mass build-up in both growth processes because of the nitrogen content of bacterial biomass (e.g. proteins). 
+Stoichiometric oxygen demand for nitrification is 4.57 g O~2~ g^-1^ N oxidized that can be found as factor in model matrix.
   
   
-### Tasks
-
-* ###
+### Model application and outlook
+Now the model calculation shows a quite good model fit. For a better fit some numerical methods for parameter estimation would be helpful due to the large number of involved parameters. First a sensivite analysis should be performed to identify the relevant parameter for minimisation of parameter optimisation calculation time.
+The model complexity leads in general to long calculation times within this app. A compilation of the ODE code instead of a numerical solution based on an interpreter as in the actual stage would speed up the numerical solution. At this stage of model complexity the use of a special software for solution of activated sludge models like [Simba#](https://www.ifak.eu/en/produkte/simba), [Sumo](https://dynamita.com/) or [Biowin](https://envirosim.com/) would be more suitable.
+The model itself needs also some further improvement as it was done in models ASM1-3 and other developments based on these core ASM. 
+  
+  
 
 
 ```{r shiny_bsp1, echo=FALSE}
@@ -59,8 +63,8 @@ missing explanations ...
 # ===== start of definitions and initialization
 
 # measured OUR data 
-OUR<-read_excel("measured_OUR.xlsx","data")
-SNOmeas<-read_excel("measured_nitrate.xlsx","data")
+OUR<-read.csv("measured_OUR.csv", sep = ";")
+SNOmeas<-read.csv("measured_nitrate.csv", sep = ";")
 
 # define ODE function
 model_ode <- function(t, state, params, influentfcn, wasfcn) {
@@ -166,53 +170,56 @@ shinyApp(
 fluidRow(
   column(4,
          numericInput(inputId = "YH",
-                      label = HTML("heterotrophic yield YH [-]:"),
+                      label = HTML("heterotrophic yield Y<sub>H</sub> [-]:"),
                       value = 0.67, min=0.00001, max=0.999999, step=0.1),
          numericInput(inputId = "mumaxH",
-                      label = HTML("max. het. growth rate mumax [d-1]:"),
+                      label = HTML("max. het. growth rate µ<sub>maxH</sub> [d<sup>-1</sup>]:"),
                       value = 4, min=0, step=0.2),
          numericInput(inputId = "Ks",
-                      label = HTML("half saturation constant Ks [g m-3]:"),
+                      label = HTML("half saturation constant K<sub>s</sub> [g m<sup>-3</sup>]:"),
                       value = 5, min=0),
          numericInput(inputId = "bH",
-                      label = HTML("het. decay rate bH [d-1]:"),
+                      label = HTML("het. decay rate b<sub>H</sub> [d<sup>-1</sup>]:"),
                       value = 0.6, min=0, step=0.1),
          numericInput(inputId = "fP",
-                      label = HTML("inert fraction of dead biomass fP [-]:"),
+                      label = HTML("inert fraction of dead biomass f<sub>P</sub> [-]:"),
                       value = 0.08, min=0, max=1, step=0.05),
   ),
   column(4, 
          numericInput(inputId = "kh",
-                      label = HTML("max. hydrolysis rate kh [d-1]:"),
+                      label = HTML("max. hydrolysis rate k<sub>h</sub> [d<sup>-1</sup>]:"),
                       value = 2, min=0, step=0.2),
          numericInput(inputId = "Kx",
-                      label = HTML("half saturation value Kx [-]:"),
+                      label = HTML("half saturation value K<sub>x</sub> [-]:"),
                       value = 0.04, min=0, step=0.01),
          numericInput(inputId = "SRT",
                       label = HTML("sludge retention time SRT [d]:"),
                       value = 2.5, min=0),
          numericInput(inputId = "iNBM",
-                      label = HTML("N content of part. COD [g N g-1 COD]:"),
+                      label = HTML("N content of part. COD [g N g<sup>-1</sup> COD]:"),
                       value = 0.08, min=0, max=1, step=0.01),
+         # Leeres Label für Ausrichtung
+         div(style = "margin-top: 40px;",
+             actionButton("resetAll", "Reset all")
+            )
   ),
   column(4,
          numericInput(inputId = "YA",
-                      label = HTML("autotrophic yield YA [-]:"),
+                      label = HTML("autotrophic yield Y<sub>A</sub> [-]:"),
                       value = 0.24, min=0, max=1, step=0.05),
          numericInput(inputId = "mumaxA",
-                      label = HTML("max. aut. growth rate mumax [d-1]:"),
+                      label = HTML("max. aut. growth rate µ<sub>maxA</sub> [d<sup>-1</sup>]:"),
                       value = 1, min=0, step=0.1),
          numericInput(inputId = "bA",
-                      label = HTML("aut. decay rate bH [d-1]:"),
+                      label = HTML("aut. decay rate b<sub>A</sub> [d<sup>-1</sup>]:"),
                       value = 0.1, min=0, max=1, step=0.05),
          numericInput(inputId = "K_NHH",
-                      label = HTML("half sat. constant K_NHH [g m-3]:"),
+                      label = HTML("half sat. constant K<sub>NHH</sub> [g m<sup>-3</sup>]:"),
                       value = 0.1, min=0, step=0.1),
          numericInput(inputId = "K_NHA",
-                      label = HTML("half sat. constant K_NHA [g m-3]:"),
+                      label = HTML("half sat. constant K<sub>NHA</sub> [g m<sup>-3</sup>]:"),
                       value = 1, min=0),
          
-         actionButton("resetAll", "Reset all"),         
   )
   
 ),
