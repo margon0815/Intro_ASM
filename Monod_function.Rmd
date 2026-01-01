@@ -19,12 +19,6 @@ library(shinyjs)
 
 ```
   
-  
-  
-Markus Ahnert, Technische Universität Dresden, Institut für Siedlungs- und Industriewasserwirtschaft\
-[markus.ahnert\@tu-dresden.de](mailto:markus.ahnert@tu-dresden.de)
-  
-  
 ### Description
 Jacques Monod discovered the relation between substrate concentration and speed of microbial growth. It is not linear but reaches a maximum growth rate as can be seen from the original experimental data.
 
