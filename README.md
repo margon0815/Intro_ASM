@@ -11,6 +11,9 @@ The folder www contains figures or images relevant for different apps.
 ### Monod function (Monod_function.Rmd)
 This app demonstrates the effect of parameters on the result of the Monod function as base of almost all activated sludge model processes.
 
+### Water balance in a storage tank (tank_storage_model.Rmd)
+A storage tank with constant influent and nonlinear effluent is used to demonstrate the transport processes and simple numerical estimation of nonlinear effluent behaviour.
+
 ### Simple mass balance of a CSTR (simple_mass_balance_CSTR.Rmd)
 The influence of parameters and initial conditions can be evaluated for a single CSTR with constant volume and influent conditions.
 
