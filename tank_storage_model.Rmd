@@ -41,7 +41,7 @@ We have a tank with a volume $V(t)$ with following conditions:
 -   start of effluent at a certain time $t_{start}$
 -   nonlinear behaviour of effluent discharge
 
-![Figure 1: System definiton](www/storage_model_image.png)
+![Figure 1: System definiton](www/storage_model_image.png){width=30%}
 
 
 This results in the following ordinary differential equation for calculation of volume dynamics in the tank:
