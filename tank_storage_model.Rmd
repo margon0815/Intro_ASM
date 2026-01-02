@@ -76,11 +76,7 @@ tank_model <- function(t, state, parms) {
 }
 ```
 
-------------------------------------------------------------------------
 
-### Model application
-
-HIER BESCHREIBUNG REIN
 
 ```{r simulation, echo=FALSE, message=FALSE}
 tank_sim <- reactive({
@@ -104,7 +100,7 @@ tank_sim <- reactive({
 
 ------------------------------------------------------------------------
 
-### Explanations
+### Model application
 
 The following plot shows the temporal progression of the tank volume and the outflow.
 
