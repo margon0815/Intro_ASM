@@ -20,6 +20,9 @@ The influence of parameters and initial conditions can be evaluated for a single
 ### Mass balance of a simple WWTP (mass_balance_AS_SC_system.Rmd)
 In a WWTP there are different reactors and circulating connections. This leads to more complex mass balance equations with feedback loops to solve.
 
+### Batch experiment with substrate pulses (substrate_pulse_exp.Rmd and substrate_pulse_exp_parest.R)
+This model is used as an example for model calibration. The shiny app can be used for manual calibration, the R script uses an automatic parameter estimation procedure.
+
 ### Stepwise development of an activated sludge model based on experiments (E_M_Exp_model_A...D.Rmd)
 Gujer and Henze presented 1991 a stepwise procedure for the development of activated sludge models. This is based on experiments performed by Ekama and Marais in the 1970s in South Africa. The developed apps comprehend the different model steps.
 There are also identical models available in folder simba_models for modeling software [Simba#](https://www.ifak.eu/en/produkte/simba).
