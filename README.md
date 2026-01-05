@@ -1,5 +1,7 @@
 # Intro_ASM - Introductionary Examples for Activated Sludge Modeling
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18153072.svg)](https://doi.org/10.5281/zenodo.18153072)
+
 Markus Ahnert, Technische Universität Dresden, Institut für Siedlungs- und Industriewasserwirtschaft\
 [markus.ahnert\@tu-dresden.de](mailto:markus.ahnert@tu-dresden.de)
 
