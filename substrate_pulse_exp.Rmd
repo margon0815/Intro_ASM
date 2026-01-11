@@ -85,6 +85,8 @@ out <- ode(y = state_0, times = t_points, func = ASM_simple_ode, parms = params,
 ```{r, echo=FALSE}
 renderPlot({
   out <- simulate()
+  par(mar = c(5, 5, 5, 5))  # <<<<<< WICHTIG  
+
   plot(out, obs = yobs, xlab = "Time [d]", ylab = expression(Respiration~rate~(OUR)~"["*g~m^-3~d^-1*"]"), main="Respiration rate of all processes")      
   legend("topright",
          legend = c("modelled", "measured"),
