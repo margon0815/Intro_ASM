@@ -22,8 +22,8 @@ ASM_simple_ode <- function(t, state, params) {
     Monod_SS <- SS/(SS+Ks_SS)
     
     # ODEs
-    dSO   <- - ((1-1/YH_SS)*(muH*Monod_SS*XH) - bH*XH) # switch to positive with minus
-    dSS   <- - 1/YH_SS*     (muH*Monod_SS*XH)
+    dSO   <- - ((1-1/YH_SS)*(muH*Monod_SS*XH) ) # switch to positive with minus
+    dSS   <- - 1/YH_SS*     (muH*Monod_SS*XH) + bH*XH
     dXH   <-                 muH*Monod_SS*XH  - bH*XH
     # return derivatives
     list(c(dSO, dSS, dXH),OUR=dSO)
